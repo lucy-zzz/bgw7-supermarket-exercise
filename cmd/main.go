@@ -11,15 +11,17 @@ import (
 
 func main() {
 	router := chi.NewRouter()
-	router.Get(("/ping"), func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
+	router.Get("/ping", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(`{message: "pong"}`)
+		w.WriteHeader(200)
+		json.NewEncoder(w).Encode(map[string]string{"message": "pong"})
 	})
 
 	router.Get("/products", products.Products)
-	router.Post("/checkout", products.Checkout)
+	// router.Post("/checkout", products.Checkout)
 
 	fmt.Println("Server running on port 8080")
-	http.ListenAndServe(":8080", router)
+	if err := http.ListenAndServe(":8080", router); err != nil {
+		fmt.Println("Error starting server:", err)
+	}
 }

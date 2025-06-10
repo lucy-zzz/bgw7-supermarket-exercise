@@ -1,22 +1,20 @@
 package products
 
-import "net/http"
+import (
+	"net/http"
+	"os"
+)
 
 func Products(w http.ResponseWriter, r *http.Request) {
+	data, err := os.ReadFile("docs/db/products.json")
 
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"error": "Failed to read products file"}`))
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }
-
-func Checkout(w http.ResponseWriter, r *http.Request) {
-
-}
-
-// var p person
-// decoder := json.NewDecoder(r.Body)
-// decoder.Decode(&p)
-
-// w.WriteHeader(200)
-// w.Header().Set("Content-Type", "application/json")
-
-// resp := fmt.Sprintf("Hello, %s %s", p.Name, p.LastName)
-
-// json.NewEncoder(w).Encode(resp)
