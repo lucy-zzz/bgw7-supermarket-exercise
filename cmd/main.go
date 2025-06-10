@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	products "github.com/lucy-zzz/bgw7-supermarket-exercise/internal/handler"
 )
 
@@ -18,6 +18,8 @@ func main() {
 	})
 
 	router.Get("/products", products.Products)
+	router.Get("/products/{id}", products.GetProductById)
+	router.Get("/products/search", products.SearchProducts)
 	// router.Post("/checkout", products.Checkout)
 
 	fmt.Println("Server running on port 8080")
