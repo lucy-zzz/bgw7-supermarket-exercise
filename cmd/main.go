@@ -17,10 +17,10 @@ func main() {
 		json.NewEncoder(w).Encode(map[string]string{"message": "pong"})
 	})
 
-	router.Get("/products", products.Products)
+	router.Get("/products", products.GetProducts)
+	router.Post("/products", products.CreateProducts)
 	router.Get("/products/{id}", products.GetProductById)
 	router.Get("/products/search", products.SearchProducts)
-	// router.Post("/checkout", products.Checkout)
 
 	fmt.Println("Server running on port 8080")
 	if err := http.ListenAndServe(":8080", router); err != nil {

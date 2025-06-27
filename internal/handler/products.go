@@ -7,11 +7,13 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/bootcamp-go/web/response"
 	"github.com/go-chi/chi/v5"
 	"github.com/lucy-zzz/bgw7-supermarket-exercise/internal/domain"
+	"github.com/lucy-zzz/bgw7-supermarket-exercise/internal/dto"
 )
 
-func Products(w http.ResponseWriter, r *http.Request) {
+func GetProducts(w http.ResponseWriter, r *http.Request) {
 	data, err := os.ReadFile("docs/db/products.json")
 
 	if err != nil {
@@ -23,6 +25,33 @@ func Products(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(data)
+}
+
+func CreateProducts(w http.ResponseWriter, r *http.Request) {
+	var req dto.CreateRequestProducts
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil {
+		response.Error(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	var products []domain.Product
+	file, err := os.Open("docs/db/products.json")
+
+	if err != nil {
+		response.Error(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = json.NewDecoder(file).Decode(&products)
+	if err != nil {
+		response.Error(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	request := req.ToDomain()
+	request.Id = len(products) + 1
+	products = append(products, request)
 }
 
 func GetProductById(w http.ResponseWriter, r *http.Request) {
