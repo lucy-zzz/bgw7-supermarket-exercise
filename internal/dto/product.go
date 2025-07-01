@@ -1,9 +1,8 @@
 package dto
 
 import (
+	"app/internal/domain"
 	"time"
-
-	"github.com/lucy-zzz/bgw7-supermarket-exercise/internal/domain"
 )
 
 type CreateRequestProducts struct {

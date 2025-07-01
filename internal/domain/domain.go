@@ -10,5 +10,4 @@ type Product struct {
 	IsPublished bool      `json:"is_published"`
 	Expiration  time.Time `json:"expiration"`
 	Price       float64   `json:"price"`
-	costPrice   float64   // preço do fornecedor - não está no json
 }
