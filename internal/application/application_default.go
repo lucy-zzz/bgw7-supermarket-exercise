@@ -60,14 +60,15 @@ func (a *ServerChi) Run() (err error) {
 		w.WriteHeader(200)
 		json.NewEncoder(w).Encode(map[string]string{"message": "pong"})
 	})
+
 	rt.Route("/products", func(rt chi.Router) {
 		rt.Get("/", hd.GetAll())
 		rt.Post("/", hd.CreateProducts())
-		rt.Get("/{id}", hd.GetProductById())
 		rt.Get("/search", hd.SearchProducts())
-		rt.Put("/{id}", hd.UpdateProduct())
-		rt.Patch("/{id}", hd.UpdateProductAttributes())
-		rt.Delete("/{id}", hd.DeleteProduct())
+		rt.Get("/{id_product}", hd.GetProductById())
+		rt.Put("/{id_product}", hd.UpdateProduct())
+		rt.Patch("/{id_product}", hd.UpdateProductAttributes())
+		rt.Delete("/{id_product}", hd.DeleteProduct())
 	})
 
 	err = http.ListenAndServe(a.serverAddress, rt)

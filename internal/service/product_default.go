@@ -13,31 +13,32 @@ type ProductDefault struct {
 	rp internal.ProductRepository
 }
 
-func (s *ProductDefault) FindAll() (v map[int]domain.Product, err error) {
-	v, err = s.rp.FindAll()
-	return
+func (s *ProductDefault) FindAll() (map[int]domain.Product, error) {
+	return s.rp.FindAll()
 }
 
-func (s *ProductDefault) Create(new domain.Product) (err error) {
-	err = s.rp.Create(new)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
+func (s *ProductDefault) Create(new domain.Product) error {
+	return s.rp.Create(new)
 }
 
-func (s *ProductDefault) GetById(id int) (p domain.Product, err error) {
+func (s *ProductDefault) GetById(id int) (domain.Product, error) {
 	return s.rp.GetById(id)
 }
 
-func (s *ProductDefault) FindProducts(price float64) (p map[int]domain.Product, err error) {
+func (s *ProductDefault) FindProducts(price float64) (map[int]domain.Product, error) {
 	return s.rp.FindProducts(price)
 }
 
 func (s *ProductDefault) DeleteById(id int) error {
 	return s.rp.DeleteById(id)
+}
+
+func (s *ProductDefault) UpdateById(id int, p domain.Product) (domain.Product, error) {
+	return s.rp.UpdateById(id, p)
+}
+
+func (s *ProductDefault) UpdateAttributesById(id int, p domain.Product) (domain.Product, error) {
+	return s.rp.UpdateAttributesById(id, p)
 }
 
 // func (s *ProductDefault) FindByColorAndYear(vehicle domain.Product) (v map[int]domain.Product, err error) {

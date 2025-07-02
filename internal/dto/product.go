@@ -2,16 +2,15 @@ package dto
 
 import (
 	"app/internal/domain"
-	"time"
 )
 
 type CreateRequestProducts struct {
-	Name        string    `json:"name"`
-	Quantity    int       `json:"quantity"`
-	CodeValue   string    `json:"code_value"`
-	IsPublished bool      `json:"is_published"`
-	Expiration  time.Time `json:"expiration"`
-	Price       float64   `json:"price"`
+	Name        string  `json:"name"`
+	Quantity    int     `json:"quantity"`
+	CodeValue   string  `json:"code_value"`
+	IsPublished bool    `json:"is_published"`
+	Expiration  string  `json:"expiration"`
+	Price       float64 `json:"price"`
 }
 
 func (c CreateRequestProducts) ToDomain() domain.Product {
