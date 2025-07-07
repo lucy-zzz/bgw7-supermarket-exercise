@@ -3,6 +3,7 @@ package application
 import (
 	"app/internal/handler"
 	"app/internal/loader"
+	"app/internal/middlewares"
 	"app/internal/repository"
 	"app/internal/service"
 	"encoding/json"
@@ -62,6 +63,8 @@ func (a *ServerChi) Run() (err error) {
 	})
 
 	rt.Route("/products", func(rt chi.Router) {
+		rt.Use(middlewares.AuthMiddleware)
+
 		rt.Get("/", hd.GetAll())
 		rt.Post("/", hd.CreateProducts())
 		rt.Get("/search", hd.SearchProducts())
